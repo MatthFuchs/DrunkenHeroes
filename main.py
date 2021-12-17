@@ -111,7 +111,8 @@ Builder.load_string("""
             text:''
             font_size:'50sp'
             on_release:
-                root.manager.current='hero'
+                root.heldeninfo()
+
         MDLabel:
             id:heldbild
             text:'Hier ist ein schönes Bild'
@@ -122,22 +123,34 @@ Builder.load_string("""
             rows:1
             cols:2
             MDLabel:
+                id:heldleben
                 text:'Leben: 30'
             GridLayout:
                 rows:1
                 cols:2
                 Button:
                     text:'+'
+                    on_release:
+                        root.lebenplus()
                 Button:
                     text:'-'
+                    on_release:
+                        root.lebenminus()
         GridLayout:
             size_hint_y: 0.25
             rows:1
             cols:2
             Button:
+                id:skill1
                 text: 'Skill 1'
+                on_release:
+                    root.skillwahl()
+                    root.manager.current='menu'
             Button:
+                id:skill2
                 text: 'Skill 2'
+                on_release:
+                    root.skillwahl()
             
 """)
 
@@ -241,6 +254,57 @@ class Heldenhub(Screen):
         print(Heldenhub.held)
         self.ids['heldenname'].text=Heldenhub.held
 
+    def heldeninfo(self):
+        if self.ids['heldenname'].text=='Lanzelot':
+            self.beschreibung="Lanzelot ist ein tollkühner Held, mit breitem grinsen und aufrechter Statur tritt er dem Dunklen Lord entgegen. \nZiel für Lanzelot ist es, den Dunklen Lord zu besiegen und nebenbei noch die Prinzessin zu klären."
+        elif self.ids['heldenname'].text == 'Ritter':
+            self.beschreibung="Der Ritter ist ein treuer Mitstreiter von Lanzelot und unterstützt diesen bei seinen Abenteuern. Ziel ist es, auf Lanzelot aufzupassen, damit sich dieser nicht tollkühn ins Unheil manövriert"
+        elif self.ids['heldenname'].text == 'Dunkler Lord':
+            self.beschreibung="Der Dunkle Lord ist ein dreckiger Schuft, dessen Ziel es ist, Lanzelots Abenteuer zu vermiesen, um Ihm den Tag zu versauen. Nebenbei würde der Dunkle Lord auch gern die Prinzessin verführen."
+        elif self.ids['heldenname'].text == 'Hirnloser':
+            self.beschreibung="Der Hirnlose wurde vom Dunklen Lord verhext, um diesem zu dienen und ihn in seinem Vorhaben zu unterstützen, Lanzelot zu besiegen"
+        elif self.ids['heldenname'].text == 'Prinzessin':
+            self.beschreibung="Die Prinzessin ist die schärfste Schnitte im ganzen Dorf und kann sich nicht recht entscheiden, ob sie den Dunklen Lord oder Lanzelot als angetrauten möchte. \n Ziel ist es, den beiden Wiedersachern sowohl Hinderniss als auch Unterstützung zu sein."
+        elif self.ids['heldenname'].text == 'Hexe':
+            self.beschreibung="Die Hexe war die Frau des Zauberers. Nach einer unschönen Trennung (an der alleine der Zauberer Schuld trug), hat sie nun ein konkurrierendes Geschäft zum Zauberlädchen eröffnet: Das Hexenlädchen! \n Ziel ist es, den Abenteuerern ihre Waren anzudrehen und vor allem dem Zauberer die Kundschaft zu stehlen indem sie billigere Preise anbietet."
+        elif self.ids['heldenname'].text == 'Zauberer':
+            self.beschreibung="Der Zauberer hat ein Zauberlädchen, welches bereits seit Generationen im Familienbesitz ist. Leider laufen die Geschäfte nicht mehr so gut wie früher, weil seine Exfrau (die Hexe) auf der gegenüberliegenden Straßenseite einen Laden eröffnet hat, nachdem sie die Trennung nicht verkraften konnte (an welcher alleine sie Schuld war).\n Ziel ist es, die eigenen Waren zu verkaufen indem man die Hexe unterbietet."
+        elif self.ids['heldenname'].text == 'Braumeister':
+            self.beschreibung="Der Braumeister kümmert sich schon seit Lebzeiten um die flüssigen Bedurfnisse der Abenteuerer in seinem Dorf. Vorausgesetzt er ist gut gelaunt...\n Ziel ist es, den Abenteuerern Getränke zu verkaufen welche verschiedenste Effekte haben können."
+        elif self.ids['heldenname'].text == 'Bauer':
+            self.beschreibung="Der Bauer hatte eigentlich nicht so richtig Lust auf ein Abenteuer zu gehen, aber dafür dass er die Bäuerin für ein paar Stunden nicht sehen muss, macht er fast alles mit."
+        else:
+            print("Fehler")
+        self.popupheldinfo = MDDialog(title="[b][size=30sp][color=ffffff]Heldeninfo[/color][/size][/b]",
+                                  text="[size=25sp]"+self.beschreibung+"[/size]", auto_dismiss=False, buttons=[
+                MDFlatButton(text='Okay!', on_release=lambda _: self.popupheldinfo.dismiss(), font_size=30)])
+        self.popupheldinfo.open()
+
+    """
+    
+    hier muss ma jetz unterscheiden wer was machen kann z.B. Zauberer und Hexe haben andere Skills als Ritter und dann muss ma halt schauen wie ma des machen
+    
+    """
+    def skillwahl(self):
+        if self.ids['skill1'].text=="Skill 1":
+            pass
+        elif self.ids['skill1'].text=="Skill 2":
+            pass
+        else:
+            Heldenhub.skilluse(self)
+
+    def skilluse(self):
+        pass
+    #wenn der held unterschiedliche leben haben soll dann musse ma da no was einfallen lassen, weil ichs hier lock
+    def lebenplus(self):
+        Leben=self.ids['heldleben'].text
+        Lebenneu=Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text="Leben: "+str(int(Lebenneu)+1)
+
+    def lebenminus(self):
+        Leben = self.ids['heldleben'].text
+        Lebenneu = Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) - 1)
 
 
 class TestApp(MDApp):
