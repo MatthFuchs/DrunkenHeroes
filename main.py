@@ -170,20 +170,52 @@ Builder.load_string("""
             background_normal: ""
             pos_hint:{'center_x': 0.4, 'center_y': 0.28}
             size_hint:0.157,0.25
-            background_color: 0,0,0,0.2
+            background_color: 0,0,0,0
             on_release:
                 root.magiershop()
+                root.manager.current='zauberershop'
         
         Button:
             id:hexeshop
             background_normal: ""
             pos_hint:{'center_x': 0.259, 'center_y': 0.659}
             size_hint:0.15,0.2
-            background_color: 0,0,0,0.2
+            background_color: 0,0,0,0
             on_release:
                 root.hexeshop()
-    
-      
+                root.manager.current='hexeshop'
+                
+<Hexeshop>:
+    canvas:
+        Rectangle:
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
+    FloatLayout:
+        Button:
+            text:"Zurück"
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.current='Stadt'            
+
+<Zauberershop>:
+    canvas:
+        Rectangle:
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
+    FloatLayout:
+        Button:
+            text:"Zurück"
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.current='Stadt'            
 
 """)
 
@@ -359,6 +391,12 @@ class Stadt(Screen):
     def hexeshop(self):
         pass
 
+class Hexeshop(Screen):
+    pass
+
+class Zauberershop(Screen):
+    pass
+
 class TestApp(MDApp):
 
     def build(self):
@@ -368,6 +406,8 @@ class TestApp(MDApp):
         sm.add_widget(Heroscreen(name='hero'))
         sm.add_widget(Heldenhub(name='herohub'))
         sm.add_widget(Stadt(name='Stadt'))
+        sm.add_widget(Hexeshop(name='hexeshop'))
+        sm.add_widget(Zauberershop(name='zauberershop'))
 
         return sm
 
