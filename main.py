@@ -6,6 +6,7 @@ from kivymd.uix.screen import Screen
 from kivy.uix.screenmanager import ScreenManager, NoTransition, SlideTransition
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.label import MDLabel
 from kivymd.uix.list import *
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -22,7 +23,6 @@ Builder.load_string("""
     users: username.text
     BoxLayout:
         orientation:'vertical'
-
         TextInput
             id: username
             color_mode: 'custom'
@@ -34,14 +34,12 @@ Builder.load_string("""
             rectangle_color_normal: 1, 1, 1, 1
             rectangle_color_focus: 1, 1, 1, 1
             line_color_focus: 1, 1, 1, 1
-
         Button:
             text: 'Heldenwahl'
             on_release: root.Heldenwahl()
         Button:
             text: 'Heldenscreen'
             on_press: root.manager.current = 'hero'
-
 <Heroscreen>:
     GridLayout:
         rows:5
@@ -94,14 +92,11 @@ Builder.load_string("""
             text:'Zur Stadt'
             on_release:
                 root.manager.current='Stadt'
-
-
 <Heldenhub>:
-        
-        
+
+
     on_pre_enter:
         root.pre()
-
     GridLayout:
         rows:4
         cols:1
@@ -113,13 +108,11 @@ Builder.load_string("""
             font_size:'50sp'
             on_release:
                 root.heldeninfo()
-
         MDLabel:
             id:heldbild
             text:'Hier ist ein schönes Bild'
             font_size:'30sp'
             size_hint_y:0.35
-
         GridLayout:
             size_hint_y:0.25
             rows:1
@@ -157,7 +150,7 @@ Builder.load_string("""
                 font_size:'30sp'
                 on_release:
                     root.skillwahl()
-                    
+
 <Stadt>:
     canvas:
         Rectangle:
@@ -165,6 +158,15 @@ Builder.load_string("""
             pos: self.pos
             size: self.size
     FloatLayout:
+        
+        Button:
+            text:"Zurück"
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.current='heldenhub' 
         Button:
             id:magiershop
             background_normal: ""
@@ -174,7 +176,7 @@ Builder.load_string("""
             on_release:
                 root.magiershop()
                 root.manager.current='zauberershop'
-        
+
         Button:
             id:hexeshop
             background_normal: ""
@@ -184,7 +186,7 @@ Builder.load_string("""
             on_release:
                 root.hexeshop()
                 root.manager.current='hexeshop'
-                
+
 <Hexeshop>:
     canvas:
         Rectangle:
@@ -192,6 +194,61 @@ Builder.load_string("""
             pos: self.pos
             size: self.size
     FloatLayout:
+    
+        MDLabel:
+            text: "Hexenshop"
+            pos_hint:{'center_x': 0.23, 'center_y': 0.9}
+            size_hint: 0.4,0.2
+            font_size:'50sp'
+            text_color: 1,1,1,1
+        Button:
+            id:hexbut1
+            text: 'Item 1'
+            pos_hint:{'center_x':0.35,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:hexbut2
+            text: 'Item 2'
+            pos_hint:{'center_x':0.525,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:hexbut3
+            text: 'Item 3'
+            pos_hint:{'center_x':0.7,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:hexbut4
+            text: 'Item 4'
+            pos_hint:{'center_x':0.35,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:hexbut5
+            text: 'Item 5'
+            pos_hint:{'center_x':0.525,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:hexbut6
+            text: 'Item 6'
+            pos_hint:{'center_x':0.7,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
         Button:
             text:"Zurück"
             background_normal: ""
@@ -199,15 +256,73 @@ Builder.load_string("""
             size_hint:0.15,0.20
             background_color: 0,0,0,0.5
             on_release:
-                root.manager.current='Stadt'            
-
+                root.manager.current='Stadt' 
+        
+                   
 <Zauberershop>:
+
     canvas:
         Rectangle:
             source: 'regal.png'
             pos: self.pos
             size: self.size
     FloatLayout:
+        MDLabel:
+            text: "Zauberershop"
+            pos_hint:{'center_x': 0.23, 'center_y': 0.9}
+            size_hint: 0.4,0.2
+            font_size:'50sp'
+            text_color: 1,1,1,1
+
+        Button:
+            id:zaubut1
+            text: 'Item 1'
+            pos_hint:{'center_x':0.35,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:zaubut2
+            text: 'Item 2'
+            pos_hint:{'center_x':0.525,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:zaubut3
+            text: 'Item 3'
+            pos_hint:{'center_x':0.7,'center_y':0.7}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:zaubut4
+            text: 'Item 4'
+            pos_hint:{'center_x':0.35,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:zaubut5
+            text: 'Item 5'
+            pos_hint:{'center_x':0.525,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+        Button:
+            id:zaubut6
+            text: 'Item 6'
+            pos_hint:{'center_x':0.7,'center_y':0.35}
+            size_hint:0.15,0.15
+            text_color: 1,1,1,1
+            on_release:
+                root.buttonpress(self)
+                
         Button:
             text:"Zurück"
             background_normal: ""
@@ -216,7 +331,6 @@ Builder.load_string("""
             background_color: 0,0,0,0.5
             on_release:
                 root.manager.current='Stadt'            
-
 """)
 
 
@@ -357,9 +471,7 @@ class Heldenhub(Screen):
         self.popupheldinfo.open()
 
     """
-
     hier muss ma jetz unterscheiden wer was machen kann z.B. Zauberer und Hexe haben andere Skills als Ritter und dann muss ma halt schauen wie ma des machen
-
     """
 
     def skillwahl(self):
@@ -384,6 +496,7 @@ class Heldenhub(Screen):
         Lebenneu = Leben.lstrip("Leben: ")
         self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) - 1)
 
+
 class Stadt(Screen):
     def magiershop(self):
         pass
@@ -392,10 +505,99 @@ class Stadt(Screen):
         pass
 
 class Hexeshop(Screen):
-    pass
+    itempool = ["Keine Namen: 5", "Keine Mimik: 5", "Keine Gestik: 5", "Schwache Hand: 5","Test1: 5","Test2: 5"]
+    challengepool = ["Schluckroulette: 5", "SSP: 5", "Pferderennen: 5"]
+    buttonitem = ["hexbut1", "hexbut2", "hexbut3"]
+    buttonchallenge = ["hexbut4", "hexbut5", "hexbut6"]
+
+    def on_pre_enter(self, *args):
+        Hexeshop.pre(self)
+    def on_enter(self, *args):
+        Hexeshop.pre(self)
+    def on_leave(self, *args):
+        for items in Hexeshop.itempool,Hexeshop.challengepool:
+            print(items)
+
+    def buttonpress(self,instance):
+
+        if instance.text in Hexeshop.itempool and instance.text != "Ausverkauft":
+            Hexeshop.itempool.remove(instance.text)
+            instance.text = "Ausverkauft"
+        elif instance.text != "Ausverkauft":
+            Hexeshop.challengepool.remove(instance.text)
+            instance.text = "Ausverkauft"
+        else:
+            print("SCHEISSE!!!!!!11!!")
+        #self.ids[knopf].text="Ausverkauft"
+
+    def pre(self):
+        self.itemauswahl = Hexeshop.itempool[::]
+        for button in self.buttonitem:
+            try:
+                if len(self.itemauswahl)!=0:
+                    text = random.choice(self.itemauswahl)
+                    self.itemauswahl.remove(text)
+                    self.ids[button].text = text
+            except:
+                self.ids[button].text = "Ausverkauft"
+
+        self.challengeauswahl = Hexeshop.challengepool[::]
+        for button in self.buttonchallenge:
+            try:
+                if len(self.itemauswahl)!=0:
+                    text = random.choice(self.challengeauswahl)
+                    self.challengeauswahl.remove(text)
+                    self.ids[button].text = text
+            except:
+                self.ids[button].text = "Ausverkauft"
+
 
 class Zauberershop(Screen):
-    pass
+    itempool=["FLuch umkehren","Stärkerer Würfel","Titties","klöten"]
+    challengepool=["Ragecage","Bierpong","Busfahren"]
+    buttonitem=["zaubut1","zaubut2","zaubut3"]
+    buttonchallenge=["zaubut4","zaubut5","zaubut6"]
+
+    def on_pre_enter(self, *args):
+        Zauberershop.pre(self)
+
+    def pre(self):
+        self.itemauswahl = Zauberershop.itempool[::]
+        for button in self.buttonitem:
+            try:
+                if len(self.itemauswahl)!=0:
+                    text=random.choice(self.itemauswahl)
+                    self.itemauswahl.remove(text)
+                    self.ids[button].text = text
+            except:
+                self.ids[button].text="Ausverkauft"
+
+
+        self.challengeauswahl = Zauberershop.challengepool[::]
+        for button in self.buttonchallenge:
+            try:
+                if len(self.itemauswahl)!=0:
+                    text=random.choice(self.challengeauswahl)
+                    self.challengeauswahl.remove(text)
+                    self.ids[button].text = text
+            except:
+                self.ids[button].text="Ausverkauft"
+
+
+
+    def buttonpress(self,instance):
+
+        if instance.text in Zauberershop.itempool and instance.text != "Ausverkauft":
+            Zauberershop.itempool.remove(instance.text)
+            instance.text = "Ausverkauft"
+        elif instance.text != "Ausverkauft":
+            Zauberershop.challengepool.remove(instance.text)
+            instance.text = "Ausverkauft"
+        else:
+            print("SCHEISSE!!!!!!11!!")
+        #self.ids[knopf].text="Ausverkauft"
+
+
 
 class TestApp(MDApp):
 
