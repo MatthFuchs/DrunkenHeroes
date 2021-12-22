@@ -15,11 +15,10 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
+__version__ = "2.0.0"
 
-Window.size = (800, 500)
 
 Builder.load_string("""
-
 <Startbildschirm>:
     users: username.text
     BoxLayout:
@@ -40,9 +39,8 @@ Builder.load_string("""
             on_release: root.Heldenwahl()
         Button:
             text: 'Heldenscreen'
-            on_press: root.manager.current = 'hero'
-
-
+            on_press:
+                root.manager.current = 'hero'
 <Heroscreen>:
     GridLayout:
         rows:5
@@ -72,7 +70,6 @@ Builder.load_string("""
             on_release:
                 root.choose_prinzessin()
                 root.manager.current='herohub'
-
         Button:
             text:'Braumeister'
             on_release:
@@ -81,13 +78,13 @@ Builder.load_string("""
         Button:
             text:'Zurück'
             on_release:
+                root.manager.transition.direction = 'right' 
                 root.manager.current='menu'
         Button:
             text:'Zur Stadt'
             on_release:
+                root.manager.transition.direction = 'left'
                 root.manager.current='Stadt'
-
-
 <Heldenhub>:
     on_pre_enter:
         root.pre()
@@ -144,8 +141,6 @@ Builder.load_string("""
                 font_size:'30sp'
                 on_release:
                     root.skillwahl()
-
-
 <Stadt>:
     canvas:
         Rectangle:
@@ -153,7 +148,7 @@ Builder.load_string("""
             pos: self.pos
             size: self.size
     FloatLayout:
-    
+
         Button:
             text: '<--'
             font_size: '50sp'
@@ -163,7 +158,7 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'right'
                 root.manager.current='Wildnisgut'
-            
+
         Button:
             text: '-->'
             font_size: '50sp'
@@ -173,7 +168,7 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'left'
                 root.manager.current='Wildnisböse'
-            
+
         Button:
             text:"Zurück"
             background_normal: ""
@@ -181,7 +176,8 @@ Builder.load_string("""
             size_hint:0.15,0.20
             background_color: 0,0,0,0.5
             on_release:
-                root.manager.current='herohub' 
+                root.manager.transition.direction = 'right'
+                root.manager.current='hero' 
         Button:
             id:magiershop
             background_normal: ""
@@ -191,7 +187,6 @@ Builder.load_string("""
             on_release:
                 root.magiershop()
                 root.manager.current='zauberershop'
-
         Button:
             id:hexeshop
             background_normal: ""
@@ -201,8 +196,6 @@ Builder.load_string("""
             on_release:
                 root.hexeshop()
                 root.manager.current='hexeshop'
-
-
 <Hexeshop>:
     canvas:
         Rectangle:
@@ -210,7 +203,7 @@ Builder.load_string("""
             pos: self.pos
             size: self.size
     FloatLayout:
-    
+
         MDLabel:
             text: "Hexenshop"
             pos_hint:{'center_x': 0.23, 'center_y': 0.9}
@@ -273,8 +266,8 @@ Builder.load_string("""
             background_color: 0,0,0,0.5
             on_release:
                 root.manager.current='Stadt' 
-        
-                   
+
+
 <Zauberershop>:
     canvas:
         Rectangle:
@@ -344,15 +337,23 @@ Builder.load_string("""
             background_color: 0,0,0,0.5
             on_release:
                 root.manager.current='Stadt'   
-              
-                
+
+
 <Wildnisgut>:
     canvas:
         Rectangle:
             source: 'hinterliebpng.png'
             pos: self.pos
             size: self.size
-    FloatLayout:     
+    FloatLayout:  
+        Button:
+            text:'uuh böses Monster'
+            pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+            font_size:'50sp' 
+            size_hint:0.3,0.30 
+            on_release:
+                root.manager.transition.direction = 'down'
+                root.manager.current='Monstergut'
         Button:
             text:"Zurück"
             background_normal: ""
@@ -362,7 +363,6 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'left'
                 root.manager.current='Stadt'
-        
 
 <Wildnisböse>:   
     canvas:
@@ -370,7 +370,15 @@ Builder.load_string("""
             source: 'hinterböse.png'
             pos: self.pos
             size: self.size      
-    FloatLayout:        
+    FloatLayout:   
+        Button:
+            text:'uuh böses Monster'
+            pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+            font_size:'50sp' 
+            size_hint:0.3,0.30 
+            on_release:
+                root.manager.transition.direction = 'up'
+                root.manager.current='Monsterböse'       
         Button:
             text:"Zurück"
             background_normal: ""
@@ -380,14 +388,37 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'right'
                 root.manager.current='Stadt'
+
+<Monstergut>:
+    
+    FloatLayout:
+        Button:
+            text:'zurück'
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.transition.direction = 'up'
+                root.manager.current='Wildnisgut'
                 
-                
-                
+<Monsterböse>:
+    FloatLayout:
+        Button:
+            text:'zurück'
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.transition.direction = 'down'
+                root.manager.current='Wildnisböse'
+            
+
 """)
 
 
 class Startbildschirm(Screen):
-
     Helden = ["Lanzelot", "Dunkler Lord", "Prinzessin", "Ritter", "Hrinloser"]
     Heldena = []
     users = StringProperty()
@@ -427,18 +458,17 @@ class Startbildschirm(Screen):
         elif playercount == 4:
             Startbildschirm.Heldena = [self.Helden[0], self.Helden[1], self.Helden[3], self.Helden[4]]
         elif playercount == 5:
-            Startbildschirm.Heldena=self.Helden
-        elif playercount in (7,9,11,13,15,17):
-            Startbildschirm.Heldena=[self.Helden[0], self.Helden[1], self.Helden[3], self.Helden[4]]
+            Startbildschirm.Heldena = self.Helden
+        elif playercount in (7, 9, 11, 13, 15, 17):
+            Startbildschirm.Heldena = [self.Helden[0], self.Helden[1], self.Helden[3], self.Helden[4]]
             Startbildschirm.Heldena.append("Prinzessin")
         Startbildschirm.lencheck(self)
 
     def lencheck(self):
         playercount = int(self.users)
-        while playercount > int(len(self.Heldena)+1):
+        while playercount > int(len(self.Heldena) + 1):
             Startbildschirm.Heldena.append("Ritter")
             Startbildschirm.Heldena.append("Hirnloser")
-
 
 
 class Heroscreen(Screen):
@@ -553,31 +583,30 @@ class Stadt(Screen):
     def hexeshop(self):
         pass
 
+
 class Hexeshop(Screen):
-    itempool = ["1", "2", "3", "4","5","6","7","8","9"]
-    challengepool = ["1", "2", "3", "4","5","6","7","8","9"]
+    itempool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    challengepool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     buttonitem = ["hexbut1", "hexbut2", "hexbut3"]
     buttonchallenge = ["hexbut4", "hexbut5", "hexbut6"]
 
     def on_pre_enter(self, *args):
         Hexeshop.pre(self)
 
-
-    def buttonpress(self,instance):
+    def buttonpress(self, instance):
 
         if instance.text != "Verkauft":
             instance.text = "Verkauft"
         else:
             print("SCHEISSE!!!!!!11!!")
 
-
     def pre(self):
 
         for button in self.buttonitem:
             if self.ids[button].text == "Verkauft":
                 try:
-                    auswahl=random.choice(Hexeshop.itempool)
-                    self.ids[button].text=auswahl
+                    auswahl = random.choice(Hexeshop.itempool)
+                    self.ids[button].text = auswahl
                     Hexeshop.itempool.remove(auswahl)
                 except:
                     if self.ids[button].text == "Verkauft":
@@ -586,8 +615,8 @@ class Hexeshop(Screen):
         for button in self.buttonchallenge:
             if self.ids[button].text == "Verkauft":
                 try:
-                    auswahl=random.choice(Hexeshop.challengepool)
-                    self.ids[button].text=auswahl
+                    auswahl = random.choice(Hexeshop.challengepool)
+                    self.ids[button].text = auswahl
                     Hexeshop.challengepool.remove(auswahl)
                 except:
                     if self.ids[button].text == "Verkauft":
@@ -595,10 +624,10 @@ class Hexeshop(Screen):
 
 
 class Zauberershop(Screen):
-    itempool=["1", "2", "3", "4","5","6","7","8","9"]
-    challengepool=["1", "2", "3", "4","5","6","7","8","9"]
-    buttonitem=["zaubut1","zaubut2","zaubut3"]
-    buttonchallenge=["zaubut4","zaubut5","zaubut6"]
+    itempool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    challengepool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    buttonitem = ["zaubut1", "zaubut2", "zaubut3"]
+    buttonchallenge = ["zaubut4", "zaubut5", "zaubut6"]
 
     def on_pre_enter(self, *args):
         Zauberershop.pre(self)
@@ -608,8 +637,8 @@ class Zauberershop(Screen):
         for button in self.buttonitem:
             if self.ids[button].text == "Verkauft":
                 try:
-                    auswahl=random.choice(Zauberershop.itempool)
-                    self.ids[button].text=auswahl
+                    auswahl = random.choice(Zauberershop.itempool)
+                    self.ids[button].text = auswahl
                     Zauberershop.itempool.remove(auswahl)
                 except:
                     if self.ids[button].text == "Verkauft":
@@ -618,15 +647,14 @@ class Zauberershop(Screen):
         for button in self.buttonchallenge:
             if self.ids[button].text == "Verkauft":
                 try:
-                    auswahl=random.choice(Zauberershop.challengepool)
-                    self.ids[button].text=auswahl
+                    auswahl = random.choice(Zauberershop.challengepool)
+                    self.ids[button].text = auswahl
                     Zauberershop.challengepool.remove(auswahl)
                 except:
                     if self.ids[button].text == "Verkauft":
                         pass
 
-
-    def buttonpress(self,instance):
+    def buttonpress(self, instance):
 
         if instance.text != "Verkauft":
             instance.text = "Verkauft"
@@ -637,10 +665,15 @@ class Zauberershop(Screen):
 class Wildnisgut(Screen):
     pass
 
+
 class Wildnisböse(Screen):
     pass
 
+class Monstergut(Screen):
+    pass
 
+class Monsterböse(Screen):
+    pass
 class DrunkenHeroes(MDApp):
 
     def build(self):
@@ -654,6 +687,8 @@ class DrunkenHeroes(MDApp):
         sm.add_widget(Zauberershop(name='zauberershop'))
         sm.add_widget(Wildnisböse(name='Wildnisböse'))
         sm.add_widget(Wildnisgut(name='Wildnisgut'))
+        sm.add_widget(Monstergut(name='Monstergut'))
+        sm.add_widget(Monsterböse(name='Monsterböse'))
         return sm
 
 
