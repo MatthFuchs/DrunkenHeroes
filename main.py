@@ -1,22 +1,14 @@
 import random
-
-from kivy.clock import Clock
-from kivymd.app import MDApp
-from kivymd.uix.screen import Screen
-from kivy.uix.screenmanager import ScreenManager, NoTransition, SlideTransition
+from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
-from kivymd.uix.label import MDLabel
 from kivymd.uix.list import *
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.core.window import Window
-from kivy.uix.gridlayout import GridLayout
-__version__ = "2.0.0"
 
+
+__version__ = "2.0.0"
 
 Builder.load_string("""
 <Startbildschirm>:
@@ -28,6 +20,7 @@ Builder.load_string("""
             color_mode: 'custom'
             color: 1, 1, 1, 1
             hint_text: "Spieleranzahl"
+            font_size:'25sp'
             line_color_normal: 1, 1, 1, 1
             color_mode: 'custom'
             mode: "rectangle"
@@ -36,52 +29,42 @@ Builder.load_string("""
             line_color_focus: 1, 1, 1, 1
         Button:
             text: 'Heldenwahl'
+            font_size:'50sp'
             on_release: root.Heldenwahl()
         Button:
             text: 'Heldenscreen'
+            font_size:'50sp'
             on_press:
+                root.manager.transition.direction = 'left'
                 root.manager.current = 'hero'
 <Heroscreen>:
     GridLayout:
-        rows:5
+        rows:2
         cols:2
         Button:
-            text: 'Lanzelot'
+            text: 'Team Lanzelot'
+            font_size:'50sp'
             on_release:
                 root.choose_lanzelot()
                 root.manager.current='herohub'
         Button:
-            text: 'Dunkler Lord'
+            text: 'Team Dunkler Lord'
+            font_size:'50sp'
             on_release:
                 root.choose_dunklerlord()
                 root.manager.current='herohub'
-        Button:
-            text:'Ritter'
-            on_release:
-                root.choose_ritter()
-                root.manager.current='herohub'
-        Button:
-            text:'Hirnloser'
-            on_release:
-                root.choose_hirnloser()
-                root.manager.current='herohub'
-        Button:
-            text:'Prinzessin'
-            on_release:
-                root.choose_prinzessin()
-                root.manager.current='herohub'
-        Button:
-            text:'Braumeister'
-            on_release:
-                root.choose_braumeister()
-                root.manager.current='herohub'
+        
         Button:
             text:'Zurück'
+            size_hint_y: .5
+            font_size:'50sp'
             on_release:
                 root.manager.transition.direction = 'right' 
                 root.manager.current='menu'
         Button:
             text:'Zur Stadt'
+            size_hint_y:.5
+            font_size:'50sp'
             on_release:
                 root.manager.transition.direction = 'left'
                 root.manager.current='Stadt'
@@ -186,6 +169,7 @@ Builder.load_string("""
             background_color: 0,0,0,0
             on_release:
                 root.magiershop()
+                root.manager.transition.direction = 'left'
                 root.manager.current='zauberershop'
         Button:
             id:hexeshop
@@ -195,6 +179,7 @@ Builder.load_string("""
             background_color: 0,0,0,0
             on_release:
                 root.hexeshop()
+                root.manager.transition.direction = 'left'
                 root.manager.current='hexeshop'
 <Hexeshop>:
     canvas:
@@ -265,6 +250,7 @@ Builder.load_string("""
             size_hint:0.15,0.20
             background_color: 0,0,0,0.5
             on_release:
+                root.manager.transition.direction = 'right'
                 root.manager.current='Stadt' 
 
 
@@ -328,7 +314,51 @@ Builder.load_string("""
             size_hint:0.15,0.15
             text_color: 1,1,1,1
             on_release:
-                root.buttonpress(self)              
+                root.buttonpress(self)  
+                
+        Button:
+            id:zaumon1
+            text:"Tollwutschwein"
+            pos_hint:{'center_x':0.1,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self)   
+                
+        Button:
+            id:zaumon2
+            text:"Drache"
+            pos_hint:{'center_x':0.2,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:zaumon3
+            text:"Esel"
+            pos_hint:{'center_x':0.3,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:zaumon4
+            text:"Zombie"
+            pos_hint:{'center_x':0.1,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:zaumon5
+            text:"Verfluchte Kiste"
+            pos_hint:{'center_x':0.2,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:zaumon6
+            text:"Bär"
+            pos_hint:{'center_x':0.3,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self)          
         Button:
             text:"Zurück"
             background_normal: ""
@@ -336,6 +366,7 @@ Builder.load_string("""
             size_hint:0.15,0.20
             background_color: 0,0,0,0.5
             on_release:
+                root.manager.transition.direction = 'right'
                 root.manager.current='Stadt'   
 
 
@@ -378,7 +409,7 @@ Builder.load_string("""
             size_hint:0.3,0.30 
             on_release:
                 root.manager.transition.direction = 'up'
-                root.manager.current='Monsterböse'       
+                root.manager.current='Monsterboese'       
         Button:
             text:"Zurück"
             background_normal: ""
@@ -390,8 +421,13 @@ Builder.load_string("""
                 root.manager.current='Stadt'
 
 <Monstergut>:
-    
+
     FloatLayout:
+        MDLabel:
+            id:monsterlabel
+            text:'BUH'
+            bg_color:0,0,0,0
+            size_hint:1,1
         Button:
             text:'zurück'
             background_normal: ""
@@ -399,10 +435,20 @@ Builder.load_string("""
             size_hint:0.15,0.20
             background_color: 0,0,0,0.5
             on_release:
+                root.printer()
                 root.manager.transition.direction = 'up'
                 root.manager.current='Wildnisgut'
+        Button:
+            text:'Beschwörem'
+            background_normal: ""
+            pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.monsterbeschwoeren()
                 
-<Monsterböse>:
+
+<Monsterboese>:
     FloatLayout:
         Button:
             text:'zurück'
@@ -413,13 +459,17 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'down'
                 root.manager.current='Wildnisböse'
-            
+
 
 """)
 
 
 class Startbildschirm(Screen):
-    Helden = ["Lanzelot", "Dunkler Lord", "Prinzessin", "Ritter", "Hrinloser"]
+    namen="Lucy Lukas Ella Konstantin Amy Ben Emely Jonas Finja Elias Amelie Niklas Luise David Frieda Oskar Katharina Philipp Romy Leon Juna Noah Theresa Luis Eva Paul Julia Finn Anna Felix Carla Julian Paulina Maximilian Elisabeth Henry Rosa Tim Mia Karl Maya Friedrich Selma Peter Edda Quirin Flora Liam Berenike Linus Simone Quentin Elena Paul Meike Johannes Susanne Alexander Annika Anton Augusta Aras Alba Asis Wilma Adrian Annegret Arthur Aglaia Adam Aaliyah Arian Annabelle Amos Alma Arik Alicia Ake Anette Altfried Astrid Ari Anisha Andreas Antke Allessandro Abigail Achim Aideen Ben Aini Bela Aida Baldur Aamenah Benedikt Ariane Beat Adriana Bernd Alexandra Bertram Ava Blue Arielle Badi Allissa Batiste Aamu Bastian Arzu Caleb Anouk Caspar Andrea Calvin Bianca Cadmus Blanka Christoph Benita Cedrik Bettina Camern Bamika Carsten Bente Cainan Barbara Cem Berit Carl Bentje Cyranus Birte Curt Brigitte Daniel Christiane Dominik Charlotte Darius Catherina Dario Caroline Dag Caren Diminic Caecilia Damian Celine Diego Coco Dieter Chaya Demian Dalia Dewis Deenah Dirk Daphne Donald Delia Enzo Dari Emil Doerte Erik Djamila Edwin Dominique Eliah Doerte Ethan Dorothee Erwin Emira Eliot Emily Enes Elif Emilio Ellen Ebbo Enna Eberhard Ebba Edgar Eleni Fabrizius Freya Finn Fiona Fabian Franziska Fabio Luzia Finjas Fabienne Franz Fiona Falko Felina Fatih Felicitas Fynn Fabia Flavio Fabiola Fady Fabrizia Fritz Filomae Falko Floris Gabriel Fae Gustav Fanny Guiseppe Fritzi Günter Greta Gerhard Gabrielle Georg Grit Gel Gwen Gerald Gabi Geoffrey Gila Gismund Giorgina Giulio Gisele Godo Heike Henri Hanna Hannes Helena Henry Haima Henrik Heike Hendrik Helen Heiko Isabell Haku Ida Hanno Ilona Hugo Ingrid Henryk Iris Hardy Ira Hagar Iara Hafiz Ivette Haile Irma Hakan Jardis Hasso Juni Harry Juna Hauke Josephine Harun Jella Hayo Jill Idil Jennifer Ian Jakobine Izzy Jessika Ibrahim Julie Igor Jasmin Jack Joana Jules Jaqueline Julian Jonna Jan Jean Jakob Janis Jaap Jodi Jonathan Jen Jannik Justyna Jona Jutta Jannis Kathleen Joel Kayra Jonte Klara Jarin Kiara Jörn Kathrin Jari Catrin Jannik Kiki Jukka Judith Samo Celia Jaakov Kaaria Jeremy Kerstin Jarne Kim Kilian Kader Kai Kaisa Kylan Liv Kristian Livia Kasper Louisa Kadmos Lucy Klaus Lina Kaarle Lena Kevin Leonie Kadir Lea Konrad Leni Lukas Lotta Leon Laura Leopold Lara Luca Lia Linas Lisa Roland Luna Leo Linda Lennard Laureen Luke Liv Lenny Liz Lasse Mona Lion Mareen Luca Mathilda Lutz Marlene Levi Marianne Matthias Mara Moritz Mina Meteo Magdalena Mats Miriam Matthis Marianne Mattes Martje Milo Maeve Mika Mae Maxim Nadja Marlon Nadine Mark Nele Matti Nora Martin Nina Morris Nada Miran Nadeshda Miro Nancy Niklas Nova Nika Nika Niko Nike Nabil Oda Noel Odilie Nils Okka Nick Olea Neo Odett Nadeem Olivia Namo Odilia Nepomuk Oana Oscar Pia Ole Paula Oliver Phlomena Olivier Paloma Onur Paris Owen Paola Obbo Poppy Idil Panja Otto Pardis Oswald Quirine Paul Quinta Phil Qara Patrick Ria Paavo Rita Pamir Raina Pascal Rabea Peter Radost Quinn Rabi Quazim Ronina Kasimir Rae René Radia Riko Svea Robin Smila Raphael Sofia Rudi Sonja Remigius Sophie Richard Stella Radi Sarah Rainer Silvie Rasmus Silke Ruben Sila Samuel Siri Stefan Sarah Sascha Saara Serkan Svenja Marco Sabine Manuel Sandra Tom Tiffanie Tim Thea Theo Tilda Theodor Tardis Thilo Tamina Till Tamy Timo Trudi Tino Tea Tiny Tima Taylor Tabia Titus Tassja Tristan Tilla Tizian Tabita Todd Tahua Thomas Uli Taavi Ulrike Tillmann Ute Uwe Uda Udo Ulla Ugor Ulrika Ulrich Ulva Uli Ulvi Ulas Uma Ulf Violeta Volker Victoria Vinzent Vanessa Valentin Valentine Vitus Valeska Volker Wandy Valentin Waris Vidu Walli Valerio Waltraud Wilhelm Wanda William Xenia Will Xani Walter Xanthe Wanja Yvonne Wadi Yu Walid Yla Xaver Zoe Yannis Zilla Yannik Zuri Yoshi Zamira Yunus"
+    global namenliste
+    namenliste=namen.split(" ")
+    Helden = ["Lanzelot", "Dunkler Lord", "Prinzessin", "Ritter "+random.choice(namenliste), "Hrinloser "+random.choice(namenliste)]
+    global Heldena
     Heldena = []
     users = StringProperty()
     heldeninit = True
@@ -428,13 +478,15 @@ class Startbildschirm(Screen):
         if self.heldeninit == True:
             Startbildschirm.Heldenliste(self)
             self.heldeninit = False
+            global heldenlistefertig
+            heldenlistefertig = Startbildschirm.Heldena[::]
         try:
             Heldenwahl = random.choice(Startbildschirm.Heldena)
             self.popupheld = MDDialog(title="[b][size=30sp][color=ffffff]Held[/color][/size][/b]",
                                       text="[size=25sp]" + Heldenwahl + "[/size]", auto_dismiss=False, buttons=[
                     MDFlatButton(text='Okay!', on_release=lambda _: self.popupheld.dismiss(), font_size=30)])
             self.popupheld.open()
-            print(Heldenwahl)
+            #print(Heldenwahl)
             Startbildschirm.Heldena.remove(Heldenwahl)
         except:
             self.popupheld = MDDialog(title="[b][size=30sp][color=ffffff]Held[/color][/size][/b]",
@@ -445,6 +497,7 @@ class Startbildschirm(Screen):
 
     def Heldenliste(self):
         try:
+            global playercount
             playercount = int(self.users)
         except:
             playercount = 1
@@ -467,8 +520,10 @@ class Startbildschirm(Screen):
     def lencheck(self):
         playercount = int(self.users)
         while playercount > int(len(self.Heldena) + 1):
-            Startbildschirm.Heldena.append("Ritter")
-            Startbildschirm.Heldena.append("Hirnloser")
+            Startbildschirm.Heldena.append("Ritter "+random.choice(namenliste))
+            Startbildschirm.Heldena.append("Hirnloser "+ random.choice(namenliste))
+
+
 
 
 class Heroscreen(Screen):
@@ -518,10 +573,10 @@ class Heldenhub(Screen):
     def choosehelden(self, auswahl):
         self.held = auswahl
         Heldenhub.held = auswahl
-        print("Held: " + self.held)
+        #print("Held: " + self.held)
 
     def pre(self):
-        print(Heldenhub.held)
+        #print(Heldenhub.held)
         self.ids['heldenname'].text = Heldenhub.held
 
     def heldeninfo(self):
@@ -585,6 +640,8 @@ class Stadt(Screen):
 
 
 class Hexeshop(Screen):
+    monsterpool = ["Tollwutwolf", "Hydra", "Kojote", "Vampir", "Schlüsselwächter", "Tiger"]
+
     itempool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     challengepool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     buttonitem = ["hexbut1", "hexbut2", "hexbut3"]
@@ -624,6 +681,9 @@ class Hexeshop(Screen):
 
 
 class Zauberershop(Screen):
+
+    monsterpool=["Tollwutschwein","Drache","Esel","Zombie","Verfluchte Kiste","Bär"]
+    buttonmonster=["zaumon1","zaumon2","zaumon3","zaumon4","zaumon5","zaumon6"]
     itempool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     challengepool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     buttonitem = ["zaubut1", "zaubut2", "zaubut3"]
@@ -642,7 +702,7 @@ class Zauberershop(Screen):
                     Zauberershop.itempool.remove(auswahl)
                 except:
                     if self.ids[button].text == "Verkauft":
-                        print("Arsch")
+                        pass
 
         for button in self.buttonchallenge:
             if self.ids[button].text == "Verkauft":
@@ -661,6 +721,28 @@ class Zauberershop(Screen):
         else:
             print("SCHEISSE!!!!!!11!!")
 
+    def monsterwahl(self,instance):
+        for buttons in self.buttonmonster:
+            if instance.text==self.monsterpool[0]:
+                Monstergut.monsterchoose(self,self.monsterpool[0])
+                break
+            elif instance.text==self.monsterpool[1]:
+                Monstergut.monsterchoose(self,self.monsterpool[1])
+                break
+            elif instance.text==self.monsterpool[2]:
+                Monstergut.monsterchoose(self,self.monsterpool[2])
+                break
+            elif instance.text==self.monsterpool[3]:
+                Monstergut.monsterchoose(self,self.monsterpool[3])
+                break
+            elif instance.text==self.monsterpool[4]:
+                Monstergut.monsterchoose(self,self.monsterpool[4])
+                break
+            elif instance.text==self.monsterpool[5]:
+                Monstergut.monsterchoose(self,self.monsterpool[5])
+                break
+            else:
+                pass
 
 class Wildnisgut(Screen):
     pass
@@ -669,11 +751,57 @@ class Wildnisgut(Screen):
 class Wildnisböse(Screen):
     pass
 
+
 class Monstergut(Screen):
+
+    Monstername="Nichts"
+    Monsterleben=""
+    goldwert=int
+    Monsterschaden=int
+
+
+    def monsterchoose(self,monster):
+        if monster=="Tollwutschwein":
+            print(monster)
+            Monstergut.Monstername=monster
+        elif monster=="Drache":
+            print(monster)
+            Monstergut.Monstername = monster
+        elif monster == "Esel":
+            print(monster)
+            Monstergut.Monstername = monster
+        elif monster == "Zombie":
+            print(monster)
+            Monstergut.Monstername = monster
+        elif monster == "Verfluchte Kiste":
+            print(monster)
+            Monstergut.Monstername = monster
+        elif monster == "Bär":
+            print(monster)
+            Monstergut.Monstername = monster
+        else:
+            print("Falsches Monster: "+monster)
+
+
+    def monsterbeschwoeren(self):
+        self.ids["monsterlabel"].color=[0,0,0,1]
+
+    def on_pre_enter(self, *args):
+        spieler = len(heldenlistefertig)
+
+        ############Monster sollen vom Magier oder der Hexe gekauft werden können und machen dann dementsprechend Damage########
+        print("Spieler: "+str(spieler))
+        self.ids["monsterlabel"].color = [0, 0, 0, 0]
+    def printer(self):
+        print("testttettrjfnfkeabf")
+        for i in heldenlistefertig:
+            print(i)
+
+
+class Monsterboese(Screen):
     pass
 
-class Monsterböse(Screen):
-    pass
+
 class DrunkenHeroes(MDApp):
 
     def build(self):
@@ -688,9 +816,55 @@ class DrunkenHeroes(MDApp):
         sm.add_widget(Wildnisböse(name='Wildnisböse'))
         sm.add_widget(Wildnisgut(name='Wildnisgut'))
         sm.add_widget(Monstergut(name='Monstergut'))
-        sm.add_widget(Monsterböse(name='Monsterböse'))
+        sm.add_widget(Monsterboese(name='Monsterboese'))
         return sm
 
 
 if __name__ == '__main__':
     DrunkenHeroes().run()
+
+
+    """
+    Spieler bekommen Chars zugewisen. Mit denen entscheidet sich dann das Team und der name mit dem se angesprochen werden
+    
+    WAFFENSCHMIED MUSS NOCH GEMACHT WERDEN
+    
+    TEAMCAMP MACHEN wo dann Team Lanzelot oder Team Dunkler Lord hocken. Da kann ma dann Leben, Gold und so anzeigen lassen
+    
+    Teamleiter muss dann am anfang enscheiden was er kauft: Fluch, billige challenge, waffe oder besseres kopfgeld.
+    
+    Dann macht ma Monster kaputt vom Kopfgeld, krigt geld und kann mehr sachen kaufen. Man kann jedes Monster unendlich oft machen --> so lange status verkauft bis gekloppt
+    
+    Man gewinnt wenn man x gold hat oder das gegnerteam durch die challenges kaputt ist (20 Leben, große challenge zieht 3 leben ab, kleine 1)
+    
+    Erklärungsseite machen wo kleines Tutorial steht
+    
+    
+    
+    
+    
+    ABLAGE:
+    
+    Button:
+            text:'Ritter'
+            on_release:
+                root.choose_ritter()
+                root.manager.current='herohub'
+        Button:
+            text:'Hirnloser'
+            on_release:
+                root.choose_hirnloser()
+                root.manager.current='herohub'
+        Button:
+            text:'Prinzessin'
+            on_release:
+                root.choose_prinzessin()
+                root.manager.current='herohub'
+        Button:
+            text:'Braumeister'
+            on_release:
+                root.choose_braumeister()
+                root.manager.current='herohub'
+    
+    
+    """
