@@ -421,7 +421,11 @@ Builder.load_string("""
                 root.manager.current='Stadt'
 
 <Monstergut>:
-
+    canvas:
+        Rectangle:
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
     FloatLayout:
         MDLabel:
             id:monsterlabel
