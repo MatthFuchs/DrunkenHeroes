@@ -243,6 +243,51 @@ Builder.load_string("""
             text_color: 1,1,1,1
             on_release:
                 root.buttonpress(self)
+
+        Button:
+        
+            id:hexmon1
+            text:"Tollwutwolf"
+            pos_hint:{'center_x':0.1,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self)   
+                
+        Button:
+            id:hexmon2
+            text:"Hydra"
+            pos_hint:{'center_x':0.2,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:hexmon3
+            text:"Kojote"
+            pos_hint:{'center_x':0.3,'center_y':0.9}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:hexmon4
+            text:"Vampir"
+            pos_hint:{'center_x':0.1,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:hexmon5
+            text:"Schlüsselwächter"
+            pos_hint:{'center_x':0.2,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self) 
+        Button:
+            id:hexmon6
+            text:"Tiger"
+            pos_hint:{'center_x':0.3,'center_y':0.8}
+            size_hint:0.1,0.1
+            on_release:
+                root.monsterwahl(self)  
         Button:
             text:"Zurück"
             background_normal: ""
@@ -429,9 +474,11 @@ Builder.load_string("""
     FloatLayout:
         MDLabel:
             id:monsterlabel
-            text:'BUH'
+            text:''
+            font_size:'50sp'
             bg_color:0,0,0,0
-            size_hint:1,1
+            pos_hint:{'center_x': 0.5, 'center_y': 0.6}
+            size_hint:.5,.5
         Button:
             text:'zurück'
             background_normal: ""
@@ -443,6 +490,7 @@ Builder.load_string("""
                 root.manager.transition.direction = 'up'
                 root.manager.current='Wildnisgut'
         Button:
+            id:mongutbesch
             text:'Beschwörem'
             background_normal: ""
             pos_hint:{'center_x': 0.5, 'center_y': 0.5}
@@ -450,10 +498,48 @@ Builder.load_string("""
             background_color: 0,0,0,0.5
             on_release:
                 root.monsterbeschwoeren()
-                
+        
+        Button:
+            id:mongutmin
+            pos_hint:{'center_x': 0.35, 'center_y': 0.4}
+            text:'- 1'
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenmin(self)
+            
+        Button:
+            id:mongutplu
+            text:'+ 1'
+            pos_hint:{'center_x': 0.55, 'center_y': 0.4}
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenplu(self)
+        
+        Button:
+            id:mongutminmin
+            text: '- 5'
+            pos_hint:{'center_x': 0.45, 'center_y': 0.4}
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenmin(self)
+        
+        
+        
+        Button:
+            text:"Gegnerangriff"
+            pos_hint:{'center_x': 0.5, 'center_y': 0.75}
+            size_hint:0.1,0.1
+            on_release:
+                root.angriff()
 
 <Monsterboese>:
+    canvas:
+        Rectangle:
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
     FloatLayout:
+    
         Button:
             text:'zurück'
             background_normal: ""
@@ -464,6 +550,55 @@ Builder.load_string("""
                 root.manager.transition.direction = 'down'
                 root.manager.current='Wildnisböse'
 
+        MDLabel:
+            id:monsterlabelboese
+            text:''
+            font_size:'50sp'
+            bg_color:0,0,0,0
+            pos_hint:{'center_x': 0.5, 'center_y': 0.6}
+            size_hint:.5,.5
+
+        Button:
+            id:monboebesch
+            text:'Beschwörem'
+            background_normal: ""
+            pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.monsterbeschwoeren()
+        
+        Button:
+            id:monboemin
+            pos_hint:{'center_x': 0.35, 'center_y': 0.4}
+            text:'- 1'
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenmin(self)
+            
+        Button:
+            id:monboeplu
+            text:'+ 1'
+            pos_hint:{'center_x': 0.55, 'center_y': 0.4}
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenplu(self)
+        
+        Button:
+            id:monboeminmin
+            text: '- 5'
+            pos_hint:{'center_x': 0.45, 'center_y': 0.4}
+            size_hint:0.1,0.1
+            on_release:
+                root.lebenmin(self)
+              
+        Button:
+            text:"Gegnerangriff"
+            pos_hint:{'center_x': 0.5, 'center_y': 0.75}
+            size_hint:0.1,0.1
+            on_release:
+                root.angriff()
+
 
 """)
 
@@ -472,7 +607,7 @@ class Startbildschirm(Screen):
     namen="Lucy Lukas Ella Konstantin Amy Ben Emely Jonas Finja Elias Amelie Niklas Luise David Frieda Oskar Katharina Philipp Romy Leon Juna Noah Theresa Luis Eva Paul Julia Finn Anna Felix Carla Julian Paulina Maximilian Elisabeth Henry Rosa Tim Mia Karl Maya Friedrich Selma Peter Edda Quirin Flora Liam Berenike Linus Simone Quentin Elena Paul Meike Johannes Susanne Alexander Annika Anton Augusta Aras Alba Asis Wilma Adrian Annegret Arthur Aglaia Adam Aaliyah Arian Annabelle Amos Alma Arik Alicia Ake Anette Altfried Astrid Ari Anisha Andreas Antke Allessandro Abigail Achim Aideen Ben Aini Bela Aida Baldur Aamenah Benedikt Ariane Beat Adriana Bernd Alexandra Bertram Ava Blue Arielle Badi Allissa Batiste Aamu Bastian Arzu Caleb Anouk Caspar Andrea Calvin Bianca Cadmus Blanka Christoph Benita Cedrik Bettina Camern Bamika Carsten Bente Cainan Barbara Cem Berit Carl Bentje Cyranus Birte Curt Brigitte Daniel Christiane Dominik Charlotte Darius Catherina Dario Caroline Dag Caren Diminic Caecilia Damian Celine Diego Coco Dieter Chaya Demian Dalia Dewis Deenah Dirk Daphne Donald Delia Enzo Dari Emil Doerte Erik Djamila Edwin Dominique Eliah Doerte Ethan Dorothee Erwin Emira Eliot Emily Enes Elif Emilio Ellen Ebbo Enna Eberhard Ebba Edgar Eleni Fabrizius Freya Finn Fiona Fabian Franziska Fabio Luzia Finjas Fabienne Franz Fiona Falko Felina Fatih Felicitas Fynn Fabia Flavio Fabiola Fady Fabrizia Fritz Filomae Falko Floris Gabriel Fae Gustav Fanny Guiseppe Fritzi Günter Greta Gerhard Gabrielle Georg Grit Gel Gwen Gerald Gabi Geoffrey Gila Gismund Giorgina Giulio Gisele Godo Heike Henri Hanna Hannes Helena Henry Haima Henrik Heike Hendrik Helen Heiko Isabell Haku Ida Hanno Ilona Hugo Ingrid Henryk Iris Hardy Ira Hagar Iara Hafiz Ivette Haile Irma Hakan Jardis Hasso Juni Harry Juna Hauke Josephine Harun Jella Hayo Jill Idil Jennifer Ian Jakobine Izzy Jessika Ibrahim Julie Igor Jasmin Jack Joana Jules Jaqueline Julian Jonna Jan Jean Jakob Janis Jaap Jodi Jonathan Jen Jannik Justyna Jona Jutta Jannis Kathleen Joel Kayra Jonte Klara Jarin Kiara Jörn Kathrin Jari Catrin Jannik Kiki Jukka Judith Samo Celia Jaakov Kaaria Jeremy Kerstin Jarne Kim Kilian Kader Kai Kaisa Kylan Liv Kristian Livia Kasper Louisa Kadmos Lucy Klaus Lina Kaarle Lena Kevin Leonie Kadir Lea Konrad Leni Lukas Lotta Leon Laura Leopold Lara Luca Lia Linas Lisa Roland Luna Leo Linda Lennard Laureen Luke Liv Lenny Liz Lasse Mona Lion Mareen Luca Mathilda Lutz Marlene Levi Marianne Matthias Mara Moritz Mina Meteo Magdalena Mats Miriam Matthis Marianne Mattes Martje Milo Maeve Mika Mae Maxim Nadja Marlon Nadine Mark Nele Matti Nora Martin Nina Morris Nada Miran Nadeshda Miro Nancy Niklas Nova Nika Nika Niko Nike Nabil Oda Noel Odilie Nils Okka Nick Olea Neo Odett Nadeem Olivia Namo Odilia Nepomuk Oana Oscar Pia Ole Paula Oliver Phlomena Olivier Paloma Onur Paris Owen Paola Obbo Poppy Idil Panja Otto Pardis Oswald Quirine Paul Quinta Phil Qara Patrick Ria Paavo Rita Pamir Raina Pascal Rabea Peter Radost Quinn Rabi Quazim Ronina Kasimir Rae René Radia Riko Svea Robin Smila Raphael Sofia Rudi Sonja Remigius Sophie Richard Stella Radi Sarah Rainer Silvie Rasmus Silke Ruben Sila Samuel Siri Stefan Sarah Sascha Saara Serkan Svenja Marco Sabine Manuel Sandra Tom Tiffanie Tim Thea Theo Tilda Theodor Tardis Thilo Tamina Till Tamy Timo Trudi Tino Tea Tiny Tima Taylor Tabia Titus Tassja Tristan Tilla Tizian Tabita Todd Tahua Thomas Uli Taavi Ulrike Tillmann Ute Uwe Uda Udo Ulla Ugor Ulrika Ulrich Ulva Uli Ulvi Ulas Uma Ulf Violeta Volker Victoria Vinzent Vanessa Valentin Valentine Vitus Valeska Volker Wandy Valentin Waris Vidu Walli Valerio Waltraud Wilhelm Wanda William Xenia Will Xani Walter Xanthe Wanja Yvonne Wadi Yu Walid Yla Xaver Zoe Yannis Zilla Yannik Zuri Yoshi Zamira Yunus"
     global namenliste
     namenliste=namen.split(" ")
-    Helden = ["Lanzelot", "Dunkler Lord", "Prinzessin", "Ritter "+random.choice(namenliste), "Hrinloser "+random.choice(namenliste)]
+    Helden = ["Lanzelot", "Dunkler Lord", "Prinzessin "+random.choice(namenliste), "Ritter "+random.choice(namenliste), "Hrinloser "+random.choice(namenliste)]
     global Heldena
     Heldena = []
     users = StringProperty()
@@ -518,7 +653,7 @@ class Startbildschirm(Screen):
             Startbildschirm.Heldena = self.Helden
         elif playercount in (7, 9, 11, 13, 15, 17):
             Startbildschirm.Heldena = [self.Helden[0], self.Helden[1], self.Helden[3], self.Helden[4]]
-            Startbildschirm.Heldena.append("Prinzessin")
+            Startbildschirm.Heldena.append("Prinzessin "+random.choice(namenliste))
         Startbildschirm.lencheck(self)
 
     def lencheck(self):
@@ -645,7 +780,7 @@ class Stadt(Screen):
 
 class Hexeshop(Screen):
     monsterpool = ["Tollwutwolf", "Hydra", "Kojote", "Vampir", "Schlüsselwächter", "Tiger"]
-
+    buttonmonster=["hexmon1","hexmon2","hexmon3","hexmon4","hexmon5","hexmon6"]
     itempool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     challengepool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     buttonitem = ["hexbut1", "hexbut2", "hexbut3"]
@@ -682,6 +817,46 @@ class Hexeshop(Screen):
                 except:
                     if self.ids[button].text == "Verkauft":
                         pass
+
+    kopfgeldverkauft = bool
+
+    def monsterwahl(self, instance):
+        for buttons in self.buttonmonster:
+            if Hexeshop.kopfgeldverkauft != True:
+                if instance.text == self.monsterpool[0]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[0])
+                    break
+                elif instance.text == self.monsterpool[1]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[1])
+                    break
+                elif instance.text == self.monsterpool[2]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[2])
+                    break
+                elif instance.text == self.monsterpool[3]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[3])
+                    break
+                elif instance.text == self.monsterpool[4]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[4])
+                    break
+                elif instance.text == self.monsterpool[5]:
+                    instance.text = "Verkauft!"
+                    Hexeshop.kopfgeldverkauft = True
+                    Monsterboese.monsterchoose(self, self.monsterpool[5])
+                    break
+                else:
+                    print("nicht nochmal auf verkauft drücken du penner")
+            else:
+                print("Es ist bereits ein Kopfgeld aktiv")
 
 
 class Zauberershop(Screen):
@@ -724,29 +899,44 @@ class Zauberershop(Screen):
             instance.text = "Verkauft"
         else:
             print("SCHEISSE!!!!!!11!!")
-
+    kopfgeldverkauft=bool
     def monsterwahl(self,instance):
         for buttons in self.buttonmonster:
-            if instance.text==self.monsterpool[0]:
-                Monstergut.monsterchoose(self,self.monsterpool[0])
-                break
-            elif instance.text==self.monsterpool[1]:
-                Monstergut.monsterchoose(self,self.monsterpool[1])
-                break
-            elif instance.text==self.monsterpool[2]:
-                Monstergut.monsterchoose(self,self.monsterpool[2])
-                break
-            elif instance.text==self.monsterpool[3]:
-                Monstergut.monsterchoose(self,self.monsterpool[3])
-                break
-            elif instance.text==self.monsterpool[4]:
-                Monstergut.monsterchoose(self,self.monsterpool[4])
-                break
-            elif instance.text==self.monsterpool[5]:
-                Monstergut.monsterchoose(self,self.monsterpool[5])
-                break
+            if Zauberershop.kopfgeldverkauft!=True:
+                if instance.text==self.monsterpool[0]:
+                    instance.text="Verkauft!"
+                    Zauberershop.kopfgeldverkauft=True
+                    Monstergut.monsterchoose(self,self.monsterpool[0])
+                    break
+                elif instance.text==self.monsterpool[1]:
+                    instance.text = "Verkauft!"
+                    Zauberershop.kopfgeldverkauft = True
+                    Monstergut.monsterchoose(self,self.monsterpool[1])
+                    break
+                elif instance.text==self.monsterpool[2]:
+                    instance.text = "Verkauft!"
+                    Zauberershop.kopfgeldverkauft = True
+                    Monstergut.monsterchoose(self,self.monsterpool[2])
+                    break
+                elif instance.text==self.monsterpool[3]:
+                    instance.text = "Verkauft!"
+                    Zauberershop.kopfgeldverkauft = True
+                    Monstergut.monsterchoose(self,self.monsterpool[3])
+                    break
+                elif instance.text==self.monsterpool[4]:
+                    instance.text = "Verkauft!"
+                    Zauberershop.kopfgeldverkauft = True
+                    Monstergut.monsterchoose(self,self.monsterpool[4])
+                    break
+                elif instance.text==self.monsterpool[5]:
+                    instance.text = "Verkauft!"
+                    Zauberershop.kopfgeldverkauft = True
+                    Monstergut.monsterchoose(self,self.monsterpool[5])
+                    break
+                else:
+                    print("nicht nochmal auf verkauft drücken du penner")
             else:
-                pass
+                print("Es ist bereits ein Kopfgeld aktiv")
 
 class Wildnisgut(Screen):
     pass
@@ -759,8 +949,10 @@ class Wildnisböse(Screen):
 class Monstergut(Screen):
 
     Monstername="Nichts"
-    Monsterleben=""
+    Monsterleben=int
     goldwert=int
+    Monsterschaden=int
+    Monsteraktiv=bool
     Monsterschaden=int
 
 
@@ -768,34 +960,104 @@ class Monstergut(Screen):
         if monster=="Tollwutschwein":
             print(monster)
             Monstergut.Monstername=monster
+            Monstergut.Monsterleben=100
+            Monstergut.Monsterschaden = 2
+            Monstergut.goldwert=10
         elif monster=="Drache":
             print(monster)
+            Monstergut.Monsterleben=500
+            Monstergut.Monsterschaden = 6
+            Monstergut.goldwert = 50
             Monstergut.Monstername = monster
         elif monster == "Esel":
             print(monster)
             Monstergut.Monstername = monster
+            Monstergut.Monsterleben=50
+            Monstergut.Monsterschaden=1
+            Monstergut.goldwert = 5
         elif monster == "Zombie":
             print(monster)
+            Monstergut.Monsterleben=150
             Monstergut.Monstername = monster
+            Monstergut.Monsterschaden = 3
+            Monstergut.goldwert = 15
         elif monster == "Verfluchte Kiste":
             print(monster)
             Monstergut.Monstername = monster
+            Monstergut.Monsterleben=300
+            Monstergut.Monsterschaden = 5
+            Monstergut.goldwert = 30
         elif monster == "Bär":
             print(monster)
+            Monstergut.Monsterleben=200
+            Monstergut.Monsterschaden = 4
+            Monstergut.goldwert = 20
             Monstergut.Monstername = monster
         else:
             print("Falsches Monster: "+monster)
 
+    def looten(self):
+        self.lootpop = MDDialog(
+            title="[b][size=30sp][color=ffffff]" + Monstergut.Monstername + " ist besiegt! [/color][/size][/b]",
+            text="[size=25sp]Ihr bekommt " + str(Monstergut.goldwert) + " Gold [/size]", auto_dismiss=False,
+            buttons=[
+                MDFlatButton(text='Okay!', on_release=lambda _: self.lootpop.dismiss(), font_size=30)])
+        self.lootpop.open()
+
+    def angriff(self):
+        if Monstergut.Monsteraktiv==True:
+            self.popupangriff = MDDialog(title="[b][size=30sp][color=ffffff]"+Monstergut.Monstername+" greift an! [/color][/size][/b]",
+                                      text="[size=25sp]Alle trinken "+str(Monstergut.Monsterschaden)+" Schluck[/size]", auto_dismiss=False, buttons=[
+                    MDFlatButton(text='Okay!', on_release=lambda _: self.popupangriff.dismiss(), font_size=30)])
+            self.popupangriff.open()
+
+
+    def lebenmin(self,instance):
+        if Monstergut.Monsteraktiv==True:
+            if instance.text=="- 5":
+                #print(Monstergut.Monsterleben)
+                Monstergut.Monsterleben=Monstergut.Monsterleben - 5
+                self.ids["monsterlabel"].text = Monstergut.Monstername + "\nLeben: " + str(Monstergut.Monsterleben)
+            else:
+                #print(Monstergut.Monsterleben)
+                Monstergut.Monsterleben = Monstergut.Monsterleben - 1
+                self.ids["monsterlabel"].text = Monstergut.Monstername + "\nLeben: " + str(Monstergut.Monsterleben)
+        if Monstergut.Monsterleben<=0 and Monstergut.Monsteraktiv == True:
+            Zauberershop.kopfgeldverkauft=False
+            Monstergut.Monsteraktiv=False
+            self.ids['mongutbesch'].background_color=[0,0,0,1]
+            self.ids['mongutbesch'].text="Beschwören"
+            self.ids["monsterlabel"].color=[0,0,0,0]
+            self.ids["monsterlabel"].text=" "
+            Monstergut.looten(self)
+
+
+
+    def lebenplu(self,instance):
+        if Monstergut.Monsteraktiv == True:
+            #print(Monstergut.Monsterleben)
+            Monstergut.Monsterleben = Monstergut.Monsterleben + 1
+            self.ids["monsterlabel"].text = Monstergut.Monstername + "\nLeben: " + str(Monstergut.Monsterleben)
 
     def monsterbeschwoeren(self):
-        self.ids["monsterlabel"].color=[0,0,0,1]
+        if Zauberershop.kopfgeldverkauft==True:
+            Monstergut.Monsteraktiv=True
+            self.ids['mongutbesch'].background_color=[0,0,0,0]
+            self.ids['mongutbesch'].text=" "
+            self.ids["monsterlabel"].color=[0,0,0,1]
+            self.ids["monsterlabel"].text=Monstergut.Monstername+"\nLeben: "+str(Monstergut.Monsterleben)
 
     def on_pre_enter(self, *args):
+        if Monstergut.Monsteraktiv==True:
+            self.ids['mongutbesch'].background_color = [0, 0, 0, 0]
+            self.ids['mongutbesch'].text = " "
+            self.ids["monsterlabel"].color = [0, 0, 0, 1]
+            self.ids["monsterlabel"].text = Monstergut.Monstername + "\nLeben: " + str(Monstergut.Monsterleben)
         spieler = len(heldenlistefertig)
 
-        ############Monster sollen vom Magier oder der Hexe gekauft werden können und machen dann dementsprechend Damage########
+        ############Monster sollen vom Magier oder der Hexe gekauft werden können und machen dann dementsprechend Damage########---> Haben höheres Leben je nach stufe und sind dann auch mehr Loot wert!
         print("Spieler: "+str(spieler))
-        self.ids["monsterlabel"].color = [0, 0, 0, 0]
+
     def printer(self):
         print("testttettrjfnfkeabf")
         for i in heldenlistefertig:
@@ -803,7 +1065,122 @@ class Monstergut(Screen):
 
 
 class Monsterboese(Screen):
-    pass
+
+    Monstername="Nichts"
+    Monsterleben=int
+    goldwert=int
+    Monsterschaden=int
+    Monsteraktiv=bool
+    Monsterschaden=int
+
+
+    def monsterchoose(self,monster):
+        if monster=="Tollwutwolf":
+            print(monster)
+            Monsterboese.Monstername=monster
+            Monsterboese.Monsterleben=100
+            Monsterboese.Monsterschaden = 2
+            Monsterboese.goldwert=10
+        elif monster=="Hydra":
+            print(monster)
+            Monsterboese.Monsterleben=500
+            Monsterboese.Monsterschaden = 6
+            Monsterboese.goldwert = 50
+            Monsterboese.Monstername = monster
+        elif monster == "Kojote":
+            print(monster)
+            Monsterboese.Monstername = monster
+            Monsterboese.Monsterleben=50
+            Monsterboese.Monsterschaden=1
+            Monsterboese.goldwert = 5
+        elif monster == "Vampir":
+            print(monster)
+            Monsterboese.Monsterleben=150
+            Monsterboese.Monstername = monster
+            Monsterboese.Monsterschaden = 3
+            Monsterboese.goldwert = 15
+        elif monster == "Schlüsselwächter":
+            print(monster)
+            Monsterboese.Monstername = monster
+            Monsterboese.Monsterleben=300
+            Monsterboese.Monsterschaden = 5
+            Monsterboese.goldwert = 30
+        elif monster == "Tiger":
+            print(monster)
+            Monsterboese.Monsterleben=200
+            Monsterboese.Monsterschaden = 4
+            Monsterboese.goldwert = 20
+            Monsterboese.Monstername = monster
+        else:
+            print("Falsches Monster: "+monster)
+
+    def looten(self):
+        self.lootpop = MDDialog(
+            title="[b][size=30sp][color=ffffff]" + Monsterboese.Monstername + " ist besiegt! [/color][/size][/b]",
+            text="[size=25sp]Ihr bekommt " + str(Monsterboese.goldwert) + " Gold [/size]", auto_dismiss=False,
+            buttons=[
+                MDFlatButton(text='Okay!', on_release=lambda _: self.lootpop.dismiss(), font_size=30)])
+        self.lootpop.open()
+
+    def angriff(self):
+        if Monsterboese.Monsteraktiv==True:
+            self.popupangriff = MDDialog(title="[b][size=30sp][color=ffffff]"+Monsterboese.Monstername+" greift an! [/color][/size][/b]",
+                                      text="[size=25sp]Alle trinken "+str(Monsterboese.Monsterschaden)+" Schluck[/size]", auto_dismiss=False, buttons=[
+                    MDFlatButton(text='Okay!', on_release=lambda _: self.popupangriff.dismiss(), font_size=30)])
+            self.popupangriff.open()
+
+
+    def lebenmin(self,instance):
+        if Monsterboese.Monsteraktiv==True:
+            if instance.text=="- 5":
+                #print(Monsterboese.Monsterleben)
+                Monsterboese.Monsterleben=Monsterboese.Monsterleben - 5
+                self.ids["monsterlabelboese"].text = Monsterboese.Monstername + "\nLeben: " + str(Monsterboese.Monsterleben)
+            else:
+                #print(Monsterboese.Monsterleben)
+                Monsterboese.Monsterleben = Monsterboese.Monsterleben - 1
+                self.ids["monsterlabelboese"].text = Monsterboese.Monstername + "\nLeben: " + str(Monsterboese.Monsterleben)
+        if Monsterboese.Monsterleben <=0 and Monsterboese.Monsteraktiv == True:
+            Hexeshop.kopfgeldverkauft=False
+            Monsterboese.Monsteraktiv=False
+            self.ids['monboebesch'].background_color=[0,0,0,1]
+            self.ids['monboebesch'].text="Beschwören"
+            self.ids["monsterlabelboese"].color=[0,0,0,0]
+            self.ids["monsterlabelboese"].text=" "
+            Monsterboese.looten(self)
+
+
+
+    def lebenplu(self,instance):
+        if Monsterboese.Monsteraktiv == True:
+            #print(Monsterboese.Monsterleben)
+            Monsterboese.Monsterleben = Monsterboese.Monsterleben + 1
+            self.ids["monsterlabelboese"].text = Monsterboese.Monstername + "\nLeben: " + str(Monsterboese.Monsterleben)
+
+    def monsterbeschwoeren(self):
+        if Hexeshop.kopfgeldverkauft==True:
+            Monsterboese.Monsteraktiv=True
+            self.ids['monboebesch'].background_color=[0,0,0,0]
+            self.ids['monboebesch'].text=" "
+            self.ids["monsterlabelboese"].color=[0,0,0,1]
+            self.ids["monsterlabelboese"].text=Monsterboese.Monstername+"\nLeben: "+str(Monsterboese.Monsterleben)
+
+    def on_pre_enter(self, *args):
+        if Monsterboese.Monsteraktiv==True:
+            self.ids['monboebesch'].background_color = [0, 0, 0, 0]
+            self.ids['monboebesch'].text = " "
+            self.ids["monsterlabelboese"].color = [0, 0, 0, 1]
+            self.ids["monsterlabelboese"].text = Monsterboese.Monstername + "\nLeben: " + str(Monsterboese.Monsterleben)
+        spieler = len(heldenlistefertig)
+
+        ############Monster sollen vom Magier oder der Hexe gekauft werden können und machen dann dementsprechend Damage########---> Haben höheres Leben je nach stufe und sind dann auch mehr Loot wert!
+        print("Spieler: "+str(spieler))
+
+    def printer(self):
+        print("testttettrjfnfkeabf")
+        for i in heldenlistefertig:
+            print(i)
+
 
 
 class DrunkenHeroes(MDApp):
@@ -843,8 +1220,11 @@ if __name__ == '__main__':
     
     Erklärungsseite machen wo kleines Tutorial steht
     
+    STÄRKERE WAFFEN SIND DANN DIE BESSEREN WÜRFEL ____ ALTER IS DES A GEILE IDEE
     
+    Boss darf angreifen, wenn der Spieler an 1er würfelt oder beim 6er würfel an 1 oder 2 er usw ______>>>>>>> GEILE IDEEEEEEEEEEEEEEEEEEE
     
+    Auf einem Hanfy wird gespielt, auf dem anderen Finanzen verwaltet!
     
     
     ABLAGE:
