@@ -46,13 +46,13 @@ Builder.load_string("""
             font_size:'50sp'
             on_release:
                 root.choose_lanzelot()
-                root.manager.current='herohub'
+                root.manager.current='herohublanzelot'
         Button:
             text: 'Team Dunkler Lord'
             font_size:'50sp'
             on_release:
                 root.choose_dunklerlord()
-                root.manager.current='herohub'
+                root.manager.current='herohubdunklerlord'
         
         Button:
             text:'Zurück'
@@ -68,9 +68,14 @@ Builder.load_string("""
             on_release:
                 root.manager.transition.direction = 'left'
                 root.manager.current='Stadt'
-<Heldenhub>:
-    on_pre_enter:
-        root.pre()
+<Heldenhubdunklerlord>:                
+    canvas:
+        Rectangle:
+            id:heldenhubhintergrund
+            source: 'lager.png'
+            pos: self.pos
+            size: self.size
+            
     GridLayout:
         rows:4
         cols:1
@@ -78,10 +83,8 @@ Builder.load_string("""
             id:heldenname
             color:1,1,1,1
             size_hint_y:0.15
-            text:''
+            text:'Team Dunkler Lord'
             font_size:'50sp'
-            on_release:
-                root.heldeninfo()
         MDLabel:
             id:heldbild
             text:'Hier ist ein schönes Bild'
@@ -113,7 +116,67 @@ Builder.load_string("""
             cols:2
             Button:
                 id:skill1
-                text: 'Skill 1'
+                text: 'Zurück'
+                font_size:'30sp'
+                on_release:
+                    root.skillwahl()
+                    root.manager.current='menu'
+            Button:
+                id:skill2
+                text: 'Skill 2'
+                font_size:'30sp'
+                on_release:
+                    root.skillwahl()
+<Heldenhublanzelot>:
+    canvas:
+        Rectangle:
+            id:heldenhubhintergrund
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
+    on_pre_enter:
+        root.pre()
+    GridLayout:
+        rows:4
+        cols:1
+        Button:
+            id:heldenname
+            color:1,1,1,1
+            size_hint_y:0.15
+            text:'Team Lanzelot'
+            font_size:'50sp'
+        MDLabel:
+            id:heldbild
+            text:'Hier ist ein schönes Bild'
+            font_size:'30sp'
+            size_hint_y:0.35
+        GridLayout:
+            size_hint_y:0.25
+            rows:1
+            cols:2
+            MDLabel:
+                id:heldleben
+                text:'Leben: 30'
+                font_size:'30sp'
+                color:1,1,1,1
+            GridLayout:
+                rows:1
+                cols:2
+                Button:
+                    text:'+'
+                    on_release:
+                        root.lebenplus()
+                Button:
+                    text:'-'
+                    on_release:
+                        root.lebenminus()
+        GridLayout:
+            size_hint_y: 0.25
+            rows:1
+            cols:2
+            Button:
+                id:skill1
+                text: 'Zurück'
                 font_size:'30sp'
                 on_release:
                     root.skillwahl()
@@ -181,6 +244,16 @@ Builder.load_string("""
                 root.hexeshop()
                 root.manager.transition.direction = 'left'
                 root.manager.current='hexeshop'
+                
+        Button:
+            id:waffenladen
+            background_normal:""
+            pos_hint:{'center_x': 0.82, 'center_y': 0.5}  
+            size_hint:0.157,0.25
+            background_color: 0,0,0,.5
+            on_release:
+                root.manager.transition.direction = 'left'
+                root.manager.current='Waffenladen'     
 <Hexeshop>:
     canvas:
         Rectangle:
@@ -339,7 +412,7 @@ Builder.load_string("""
         Button:
             id:zaubut4
             text: 'Verkauft'
-            pos_hint:{'center_x':0.35,'center_y':0.35}
+            pos_hint:{'center_x':0.35,'center_y':0.35}   
             size_hint:0.15,0.15
             text_color: 1,1,1,1
             on_release:
@@ -598,7 +671,69 @@ Builder.load_string("""
             size_hint:0.1,0.1
             on_release:
                 root.angriff()
+        
+<Waffenladen>:
+    canvas:
+        Rectangle:
+            source: 'regal.png'
+            pos: self.pos
+            size: self.size
+    FloatLayout:
+        Button:
+            id:waffe1
+            size_hint:0.15,0.15
+            text:"Holzschwert"
+            pos_hint:{'center_x':0.35,'center_y':0.7}
+            on_release:
+                root.waffekaufen(self)
+        Button:
+            id:waffe2
+            size_hint:0.15,0.15
+            text:"Eisenschwert"
+            pos_hint:{'center_x':0.525,'center_y':0.7}
+            on_release:
+                root.waffekaufen(self)
+        Button:
+            id:waffe3
+            size_hint:0.15,0.15
+            text:"rostige Axt"
+            pos_hint:{'center_x':0.7,'center_y':0.7}
+            on_release:
+                root.waffekaufen(self)
+        Button:
+            id:waffe4
+            size_hint:0.15,0.15
+            text:"Kriegsaxt"
+            pos_hint:{'center_x':0.35,'center_y':0.35} 
+            on_release:
+                root.waffekaufen(self)
+        Button:
+            id:waffe5
+            size_hint:0.15,0.15
+            text:"Armbrust"
+            pos_hint:{'center_x':0.525,'center_y':0.35}
+            on_release:
+                root.waffekaufen(self)
+        Button:
+            id:waffe6
+            size_hint:0.15,0.15
+            text:"Excalibur"
+            pos_hint:{'center_x':0.7,'center_y':0.35}
+            on_release:
+                root.waffekaufen(self)
+                
+        Button:
+            text:"Zurück"
+            background_normal: ""
+            pos_hint:{'center_x': 0.1, 'center_y': 0.1}
+            size_hint:0.15,0.20
+            background_color: 0,0,0,0.5
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current='Stadt' 
+            
 
+            
 
 """)
 
@@ -669,9 +804,7 @@ class Heroscreen(Screen):
     global charakter
     charakter = ''
 
-    def choose_bauer(self):
-        self.charakter = "Bauer"
-        Heldenhub.choosehelden(self, self.charakter)
+
 
     def choose_lanzelot(self):
         self.charakter = 'Lanzelot'
@@ -679,30 +812,6 @@ class Heroscreen(Screen):
 
     def choose_dunklerlord(self):
         self.charakter = 'Dunkler Lord'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_ritter(self):
-        self.charakter = 'Ritter'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_hirnloser(self):
-        self.charakter = 'Hirnloser'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_prinzessin(self):
-        self.charakter = 'Prinzessin'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_hexe(self):
-        self.charakter = 'Hexe'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_zauberer(self):
-        self.charakter = 'Zauberer'
-        Heldenhub.choosehelden(self, self.charakter)
-
-    def choose_braumeister(self):
-        self.charakter = 'Braumeister'
         Heldenhub.choosehelden(self, self.charakter)
 
 
@@ -716,6 +825,7 @@ class Heldenhub(Screen):
 
     def pre(self):
         #print(Heldenhub.held)
+        self.ids['heldenhubhintergrund'].source="lager.png"
         self.ids['heldenname'].text = Heldenhub.held
 
     def heldeninfo(self):
@@ -1059,11 +1169,43 @@ class Monstergut(Screen):
         print("Spieler: "+str(spieler))
 
     def printer(self):
-        print("testttettrjfnfkeabf")
         for i in heldenlistefertig:
             print(i)
 
+class Waffenladen(Screen):
 
+    def on_pre_enter(self, *args):
+        self.ids["waffe1"].text="Holzschwert"
+        self.ids["waffe2"].text = "Eisenschwert"
+        self.ids["waffe3"].text = "rostige Axt"
+        self.ids["waffe4"].text = "Kriegsaxt"
+        self.ids["waffe5"].text = "Armbrust"
+        self.ids["waffe6"].text = "Excalibur"
+
+    def waffekaufen(self,instance):
+        if instance.text=="Holzschwert":
+            Waffenladen.popupschwert(self,instance.text,"5",instance)
+        if instance.text=="Eisenschwert":
+            Waffenladen.popupschwert(self,instance.text,"10",instance)
+        if instance.text=="rostige Axt":
+            Waffenladen.popupschwert(self, instance.text, "15",instance)
+        if instance.text=="Kriegsaxt":
+            Waffenladen.popupschwert(self, instance.text, "20",instance)
+        if instance.text=="Armbrust":
+            Waffenladen.popupschwert(self, instance.text, "30",instance)
+        if instance.text=="Excalibur":
+            Waffenladen.popupschwert(self, instance.text, "50",instance)
+
+    def waffeverkauft(self,instance):
+        instance.text="Verkauft!"
+    def popupschwert(self,name,wert,instance):
+        self.popupschwert = MDDialog(
+            title="[b][size=30sp][color=ffffff]" + name+ "[/color][/size][/b]",
+            text="[size=25sp]"+name+" kostet " + wert + " Gold und Schluck[/size]", auto_dismiss=False,
+            buttons=[
+                MDFlatButton(text='Kaufen!', on_release=lambda _: {self.popupschwert.dismiss(),Waffenladen.waffeverkauft(self,instance)}, font_size=30),MDFlatButton(text='Nicht Kaufen!', on_release=lambda _: self.popupschwert.dismiss(), font_size=30)]
+        )
+        self.popupschwert.open()
 class Monsterboese(Screen):
 
     Monstername="Nichts"
@@ -1172,14 +1314,88 @@ class Monsterboese(Screen):
             self.ids["monsterlabelboese"].color = [0, 0, 0, 1]
             self.ids["monsterlabelboese"].text = Monsterboese.Monstername + "\nLeben: " + str(Monsterboese.Monsterleben)
         spieler = len(heldenlistefertig)
-
-        ############Monster sollen vom Magier oder der Hexe gekauft werden können und machen dann dementsprechend Damage########---> Haben höheres Leben je nach stufe und sind dann auch mehr Loot wert!
         print("Spieler: "+str(spieler))
 
     def printer(self):
         print("testttettrjfnfkeabf")
         for i in heldenlistefertig:
             print(i)
+
+class Heldenhublanzelot(Screen):
+    held = ''
+
+    def choosehelden(self, auswahl):
+        self.held = auswahl
+        Heldenhublanzelot.held = auswahl
+        #print("Held: " + self.held)
+
+    def pre(self):
+        #print(Heldenhub.held)
+        self.ids['heldenname'].text = Heldenhublanzelot.held
+
+    def heldeninfo(self):
+        pass
+
+
+
+    def skillwahl(self):
+        if self.ids['skill1'].text == "Skill 1":
+            pass
+        elif self.ids['skill1'].text == "Skill 2":
+            pass
+        else:
+            Heldenhublanzelot.skilluse(self)
+
+    def skilluse(self):
+        pass
+
+    def lebenplus(self):
+        Leben = self.ids['heldleben'].text
+        Lebenneu = Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) + 1)
+
+    def lebenminus(self):
+        Leben = self.ids['heldleben'].text
+        Lebenneu = Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) - 1)
+
+
+
+class Heldenhubdunklerlord(Screen):
+    held = ''
+
+    def choosehelden(self, auswahl):
+        self.held = auswahl
+        Heldenhubdunklerlord.held = auswahl
+        #print("Held: " + self.held)
+
+    def pre(self):
+        #print(Heldenhub.held)
+        self.ids['heldenname'].text = Heldenhubdunklerlord.held
+
+    def heldeninfo(self):
+        pass
+
+    def skillwahl(self):
+        if self.ids['skill1'].text == "Skill 1":
+            pass
+        elif self.ids['skill1'].text == "Skill 2":
+            pass
+        else:
+            Heldenhubdunklerlord.skilluse(self)
+
+    def skilluse(self):
+        pass
+
+    def lebenplus(self):
+        Leben = self.ids['heldleben'].text
+        Lebenneu = Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) + 1)
+
+    def lebenminus(self):
+        Leben = self.ids['heldleben'].text
+        Lebenneu = Leben.lstrip("Leben: ")
+        self.ids['heldleben'].text = "Leben: " + str(int(Lebenneu) - 1)
 
 
 
@@ -1198,6 +1414,9 @@ class DrunkenHeroes(MDApp):
         sm.add_widget(Wildnisgut(name='Wildnisgut'))
         sm.add_widget(Monstergut(name='Monstergut'))
         sm.add_widget(Monsterboese(name='Monsterboese'))
+        sm.add_widget(Heldenhublanzelot(name='herohublanzelot'))
+        sm.add_widget(Heldenhubdunklerlord(name='herohubdunklerlord'))
+        sm.add_widget(Waffenladen(name=("Waffenladen")))
         return sm
 
 
@@ -1206,7 +1425,12 @@ if __name__ == '__main__':
 
 
     """
-    Spieler bekommen Chars zugewisen. Mit denen entscheidet sich dann das Team und der name mit dem se angesprochen werden
+    
+    
+    WAS NOCH MACHEN? --> MAL LAUTER FLÜCHE U ITEMS MACHEN U ALLES MALEN
+    
+    
+        Spieler bekommen Chars zugewisen. Mit denen entscheidet sich dann das Team und der name mit dem se angesprochen werden
     
     WAFFENSCHMIED MUSS NOCH GEMACHT WERDEN
     
@@ -1250,5 +1474,55 @@ if __name__ == '__main__':
                 root.choose_braumeister()
                 root.manager.current='herohub'
     
-    
+       def heldeninfo(self):
+        if self.ids['heldenname'].text == 'Lanzelot':
+            self.beschreibung = "Lanzelot ist ein tollkühner Held, mit breitem grinsen und aufrechter Statur tritt er dem Dunklen Lord entgegen. \nZiel für Lanzelot ist es, den Dunklen Lord zu besiegen und nebenbei noch die Prinzessin zu klären."
+        elif self.ids['heldenname'].text == 'Ritter':
+            self.beschreibung = "Der Ritter ist ein treuer Mitstreiter von Lanzelot und unterstützt diesen bei seinen Abenteuern. Ziel ist es, auf Lanzelot aufzupassen, damit sich dieser nicht tollkühn ins Unheil manövriert"
+        elif self.ids['heldenname'].text == 'Dunkler Lord':
+            self.beschreibung = "Der Dunkle Lord ist ein dreckiger Schuft, dessen Ziel es ist, Lanzelots Abenteuer zu vermiesen, um Ihm den Tag zu versauen. Nebenbei würde der Dunkle Lord auch gern die Prinzessin verführen."
+        elif self.ids['heldenname'].text == 'Hirnloser':
+            self.beschreibung = "Der Hirnlose wurde vom Dunklen Lord verhext, um diesem zu dienen und ihn in seinem Vorhaben zu unterstützen, Lanzelot zu besiegen"
+        elif self.ids['heldenname'].text == 'Prinzessin':
+            self.beschreibung = "Die Prinzessin ist die schärfste Schnitte im ganzen Dorf und kann sich nicht recht entscheiden, ob sie den Dunklen Lord oder Lanzelot als angetrauten möchte. \n Ziel ist es, den beiden Wiedersachern sowohl Hinderniss als auch Unterstützung zu sein."
+        elif self.ids['heldenname'].text == 'Hexe':
+            self.beschreibung = "Die Hexe war die Frau des Zauberers. Nach einer unschönen Trennung (an der alleine der Zauberer Schuld trug), hat sie nun ein konkurrierendes Geschäft zum Zauberlädchen eröffnet: Das Hexenlädchen! \n Ziel ist es, den Abenteuerern ihre Waren anzudrehen und vor allem dem Zauberer die Kundschaft zu stehlen indem sie billigere Preise anbietet."
+        elif self.ids['heldenname'].text == 'Zauberer':
+            self.beschreibung = "Der Zauberer hat ein Zauberlädchen, welches bereits seit Generationen im Familienbesitz ist. Leider laufen die Geschäfte nicht mehr so gut wie früher, weil seine Exfrau (die Hexe) auf der gegenüberliegenden Straßenseite einen Laden eröffnet hat, nachdem sie die Trennung nicht verkraften konnte (an welcher alleine sie Schuld war).\n Ziel ist es, die eigenen Waren zu verkaufen indem man die Hexe unterbietet."
+        elif self.ids['heldenname'].text == 'Braumeister':
+            self.beschreibung = "Der Braumeister kümmert sich schon seit Lebzeiten um die flüssigen Bedurfnisse der Abenteuerer in seinem Dorf. Vorausgesetzt er ist gut gelaunt...\n Ziel ist es, den Abenteuerern Getränke zu verkaufen welche verschiedenste Effekte haben können."
+        elif self.ids['heldenname'].text == 'Bauer':
+            self.beschreibung = "Der Bauer hatte eigentlich nicht so richtig Lust auf ein Abenteuer zu gehen, aber dafür dass er die Bäuerin für ein paar Stunden nicht sehen muss, macht er fast alles mit."
+        else:
+            print("Fehler")
+        self.popupheldinfo = MDDialog(title="[b][size=30sp][color=ffffff]Heldeninfo[/color][/size][/b]",
+                                      text="[size=25sp]" + self.beschreibung + "[/size]", auto_dismiss=False, buttons=[
+                MDFlatButton(text='Okay!', on_release=lambda _: self.popupheldinfo.dismiss(), font_size=30)])
+                
+                if self.ids['heldenname'].text == 'Lanzelot':
+            self.beschreibung = "Lanzelot ist ein tollkühner Held, mit breitem grinsen und aufrechter Statur tritt er dem Dunklen Lord entgegen. \nZiel für Lanzelot ist es, den Dunklen Lord zu besiegen und nebenbei noch die Prinzessin zu klären."
+        elif self.ids['heldenname'].text == 'Ritter':
+            self.beschreibung = "Der Ritter ist ein treuer Mitstreiter von Lanzelot und unterstützt diesen bei seinen Abenteuern. Ziel ist es, auf Lanzelot aufzupassen, damit sich dieser nicht tollkühn ins Unheil manövriert"
+        elif self.ids['heldenname'].text == 'Dunkler Lord':
+            self.beschreibung = "Der Dunkle Lord ist ein dreckiger Schuft, dessen Ziel es ist, Lanzelots Abenteuer zu vermiesen, um Ihm den Tag zu versauen. Nebenbei würde der Dunkle Lord auch gern die Prinzessin verführen."
+        elif self.ids['heldenname'].text == 'Hirnloser':
+            self.beschreibung = "Der Hirnlose wurde vom Dunklen Lord verhext, um diesem zu dienen und ihn in seinem Vorhaben zu unterstützen, Lanzelot zu besiegen"
+        elif self.ids['heldenname'].text == 'Prinzessin':
+            self.beschreibung = "Die Prinzessin ist die schärfste Schnitte im ganzen Dorf und kann sich nicht recht entscheiden, ob sie den Dunklen Lord oder Lanzelot als angetrauten möchte. \n Ziel ist es, den beiden Wiedersachern sowohl Hinderniss als auch Unterstützung zu sein."
+        elif self.ids['heldenname'].text == 'Hexe':
+            self.beschreibung = "Die Hexe war die Frau des Zauberers. Nach einer unschönen Trennung (an der alleine der Zauberer Schuld trug), hat sie nun ein konkurrierendes Geschäft zum Zauberlädchen eröffnet: Das Hexenlädchen! \n Ziel ist es, den Abenteuerern ihre Waren anzudrehen und vor allem dem Zauberer die Kundschaft zu stehlen indem sie billigere Preise anbietet."
+        elif self.ids['heldenname'].text == 'Zauberer':
+            self.beschreibung = "Der Zauberer hat ein Zauberlädchen, welches bereits seit Generationen im Familienbesitz ist. Leider laufen die Geschäfte nicht mehr so gut wie früher, weil seine Exfrau (die Hexe) auf der gegenüberliegenden Straßenseite einen Laden eröffnet hat, nachdem sie die Trennung nicht verkraften konnte (an welcher alleine sie Schuld war).\n Ziel ist es, die eigenen Waren zu verkaufen indem man die Hexe unterbietet."
+        elif self.ids['heldenname'].text == 'Braumeister':
+            self.beschreibung = "Der Braumeister kümmert sich schon seit Lebzeiten um die flüssigen Bedurfnisse der Abenteuerer in seinem Dorf. Vorausgesetzt er ist gut gelaunt...\n Ziel ist es, den Abenteuerern Getränke zu verkaufen welche verschiedenste Effekte haben können."
+        elif self.ids['heldenname'].text == 'Bauer':
+            self.beschreibung = "Der Bauer hatte eigentlich nicht so richtig Lust auf ein Abenteuer zu gehen, aber dafür dass er die Bäuerin für ein paar Stunden nicht sehen muss, macht er fast alles mit."
+        else:
+            print("Fehler")
+        self.popupheldinfo = MDDialog(title="[b][size=30sp][color=ffffff]Heldeninfo[/color][/size][/b]",
+                                      text="[size=25sp]" + self.beschreibung + "[/size]", auto_dismiss=False, buttons=[
+                MDFlatButton(text='Okay!', on_release=lambda _: self.popupheldinfo.dismiss(), font_size=30)])
+        self.popupheldinfo.open()
+        self.popupheldinfo.open()
+        hier muss ma jetz unterscheiden wer was machen kann z.B. Zauberer und Hexe haben andere Skills als Ritter und dann muss ma halt schauen wie ma des machen
     """
