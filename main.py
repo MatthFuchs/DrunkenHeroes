@@ -887,7 +887,39 @@ class Stadt(Screen):
     def hexeshop(self):
         pass
 
+"""
 
+idee: alle flüche/segen sind zufällig und kosten halt dann 5 bis 50 gold oder so und die zieht ma dann vo am stapel und dann sieht ma was ma bekommt. Brauchen wir halt wieder karten aber wär ja a oke weil
+man da dann alles gut erklären kann drauf... Könnte ma theoretisch auch mit den challenges machen. Man kanns auch so machen, dass alle 10 min a challenge gespielt wird dann hat ma bissl zeitdruck 
+
+Was für items???
+
+items zauberer=segen
+loch im Fass: weniger schluck fürs team
+ein herz
+waffenschaden x2 
+stärkere würfel
+fluch aufheben
+fluch umkehren
+Engelstrank (ein nicht alkoholisches Getränk holen)
+
+items hexe=flüche
+gegner schwächere würfel (höhere chance für gegner zum angreifen)
+mehr trinken
+keine namen mehr
+keine gestiken mehr
+kein lachen mehr 
+segen entfernen
+segen klauen
+gegner sind trinkpartner
+ultimatives fick dich
+nichtmehr ... sagen
+shots verteilen
+schlücke verteilen
+Teufelstrank (gegnern schnaps ins Getränk)
+klorad
+
+"""
 class Hexeshop(Screen):
     monsterpool = ["Tollwutwolf", "Hydra", "Kojote", "Vampir", "Schlüsselwächter", "Tiger"]
     buttonmonster=["hexmon1","hexmon2","hexmon3","hexmon4","hexmon5","hexmon6"]
@@ -1317,7 +1349,6 @@ class Monsterboese(Screen):
         print("Spieler: "+str(spieler))
 
     def printer(self):
-        print("testttettrjfnfkeabf")
         for i in heldenlistefertig:
             print(i)
 
